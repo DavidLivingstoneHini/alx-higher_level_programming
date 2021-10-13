@@ -1,19 +1,29 @@
 #!/usr/bin/python3
-"""Module 10-class_to_json.
-Returns the dictionary description with
-simple data structure (list, dictionary,
-string, integer and boolean)
-for JSON serialization of an object.
-"""
+'''task 10 module'''
 
 
-def class_to_json(obj):
-    """Creates a dict description of obj.
+class Student:
+    '''student class'''
+    def __init__(self, first_name, last_name, age):
+        '''Initialization of the student object'''
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
 
-    Args:
-        - obj: object to serialize
-
-    Returns: dictionnary description of obj
-    """
-
-    return obj.__dict__
+    def to_json(self, attrs=None):
+        '''return a dictionary representation of a Student instance
+        If attrs is a list of strings, only attribute names contained
+        in this list must be retrieved.
+        Otherwise, all attributes must be retrieved
+        '''
+        try:
+            for attr in attrs:
+                if type(attr) is not str:
+                    return self.__dict__
+        except Exception:
+            return self.__dict__
+        my_dict = dict()
+        for key, value in self.__dict__.items():
+            if key in attrs:
+                my_dict[key] = value
+        return my_dict
